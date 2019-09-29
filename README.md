@@ -58,7 +58,7 @@ For sentiment analysis, I implemented two most popular modules : TextBlob and va
 
 ### Predictive Modeling
 I built both simple neural network and LSTM models for predictive modeling of Bitcoin price. As suspected, LSTM performed well on time sentisive dataset. LSTM model was trained to use previous 8 days worth of data to predict next day's Bitcoin price. Features used for the model is described in "Feature Engineering" section. LDA model's topic features were not used as they did not any impact on the model. Careful train/validation/test set split was carried out so that the model doesn't look into the future (important especially since moving averages were used). Here is LSTM model's performance on price prediction.  
-![LSTM Prediction](img/lstm_prediction.PNG)
+![LSTM Prediction](img/lstm_prediction.png)
 
 
 ## Result 
