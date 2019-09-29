@@ -24,14 +24,14 @@ Refer to presentations for more lighter intro to my project
 ## Notable Technologies Used
 * Python 3, Jupyter Notebook
 * Nltk, Gensim, Spacy, Scikit-learn # NLP Text Processing
-* CountVectorizer, TfidfVectorizer, NMF, LDA, CoreEx # Topic Modeling
+* CountVectorizer, TfidfVectorizer, NMF, LDA, CorEx # Topic Modeling
 * TextBlob, vaderSentiment # Sentiment Analysis
 * Pandas, Numpy, Matplotlib, Seaborn # Data Processing/Visualization tools
 * Neural Network, LSTM, Scikit-learn # Models
 * etc. 
 
 ## Feature Engineering
-Various preprocessing techniques were applied on the text corpus of article headlines and intros. Preprocessing of texts is crucial for the meaningful performance of clustering algorithms in topic modeling realm. This preprocessed texts were carried over to sentiment analysis as well. Although not implemented in my predictive models, topic vectors from the Latent Dirichlet Allocation (LDA) model for topic modeling were extracted to be used as input features to predictive models if deemed necessary. Besides the realm of NLP, various technical aspects of Bitcoin(prices, volumnes, etc.) were feature engineered for predictive models' inputs.
+Various preprocessing techniques were applied on the text corpus of article headlines and intros. Preprocessing of texts is crucial for the meaningful performance of clustering algorithms in topic modeling realm. This preprocessed texts were carried over to sentiment analysis as well. Although not implemented in my predictive models, topic vectors from the **Latent Dirichlet Allocation (LDA)** model for topic modeling were extracted to be used as input features to predictive models if deemed necessary. Besides the realm of NLP, various technical aspects of Bitcoin(prices, volumnes, etc.) were feature engineered for predictive models' inputs.
 
 * **Text Preprocessing** - Removal of punctuations, numbers, special characters, and stopwords. Lowercasing, lemmatization as well.
 * **LDA's Topic Vectors** - Input for predictive models.
@@ -40,8 +40,24 @@ Various preprocessing techniques were applied on the text corpus of article head
 * **Rate of Change in Percent** - Instead of daily values of the metrics only, daily percent changes were calcualted to generate features to generalize
 
 ## Model 
-Logistic regression was used as baseline model for this multi-class classification project. For the final model, LightGBM with RandomizedSearchCV was used for hyperparameter tuning and cross validation with 5 folds on the training data. While lacking in explainability compared to the logistic regression, LightGBM is preffered for its better scores as shown below.  
-![Models](img/models.PNG)
+### Topic Modeling
+Various combinations of techniques and hyperparameters were tried. Ultimately, **Frequency-inverse Document Frequency (Tf-idf)** was used for bag-of-word algorithm to capture terms appearing infrequently. Then, **Latent Dirichlet Allocation (LDA)** was used for clustering algorithm to form the topics. Besides the fact that LDA resulted in better topic clusters, LDA also produces topic vectors that's manageable in terms of number of vectors (same as number of generated topics) that could be fed into predictive models. Some of other combinations used were **CountVectorizer**, **Non-negative Matrix Factorization (NMF)**, and **Correlation Explanation (CorEX)**. 
+Below is an image of 13 topics and most dominant words picked up by Tf-idf & LDA models.  
+![Topic Words](img/topic_words.PNG)
+
+Then, I assigned appropriate topic names for each cluster and plotted by frequency in descending order.  
+![Topic Counts](img/topic_counts.PNG)
+
+Below are examples of trends of topics over time. As Bitcoin matured, wild west era of hacking and stealing Bitcoin decreased while regulations kept increasing.   
+![Topic Hacker](img/topic_hacker.PNG)
+![Topic Regulation](img/topic_regulation.PNG)
+
+### Sentiment Analysis
+For sentiment analysis, I implemented two most popular modules : TextBlob and vaderSentiment. Two modules agreed on majority of sentiments, but resulted in completely opposite sentiments for certain data. In order to smooth out the effect of sentiment feature's impact on the predictive model, averaging of the two different modules yielded best result. Then, I verified if sentiment could be used as a precursor for the price fluctuations, or in another word a meaningful feature for the predictive modeling. Below is an image confirming the cases when there was a directional change in sentiments, marked with blue arrow and circle, that happens before directional change in price, marked as yellow arrow and circle.  
+![Sentiment and Price Change](img/sentiment_change.PNG)
+
+### Predictive Modeling
+
 
 
 ## Result 
