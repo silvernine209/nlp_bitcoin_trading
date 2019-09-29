@@ -1,4 +1,4 @@
-# Bitcoin Topic Modeling/Sentiment Analysis Using NLP and Trader Using LSTM
+# Bitcoin Topic Modeling/Sentiment Analysis Using NLP and Trading Using LSTM
 I applied **natural language processing (NLP)** on news articles to perform **topic modeling** using bag-of-words approach and **sentiment analysis** using open source modules. Topic modeling gives a very consie visual for the user to understand topics and trends revolving around Bitcoin and cryptocurrency over time. Also, features created from sentiment analysis were combined with other features (Bitcoin's open price, close price, volume, etc.) to build a **LSTM model to predict Bitcoin price**.
 
 ## Project Intro/Objective
@@ -48,7 +48,7 @@ Below is an image of 13 topics and most dominant words picked up by Tf-idf & LDA
 Then, I assigned appropriate topic names for each cluster and plotted by frequency in descending order.  
 ![Topic Counts](img/topic_counts.PNG)
 
-Below are examples of trends of topics over time. As Bitcoin matured, wild west era of hacking and stealing Bitcoin decreased while regulations kept increasing.   
+Below are examples of trends of topics over time. As Bitcoin matured, wild west era of hacking and stealing Bitcoin decreased while regulations kept increasing. Yellow line represents Bitcoin price and blue line represents corresponding topic's occurence. Both are rescaled to overlap in the same graph.   
 ![Topic Hacker](img/topic_hacker.PNG)
 ![Topic Regulation](img/topic_regulation.PNG)
 
@@ -57,14 +57,12 @@ For sentiment analysis, I implemented two most popular modules : TextBlob and va
 ![Sentiment and Price Change](img/sentiment_change.PNG)
 
 ### Predictive Modeling
-
+I built both simple neural network and LSTM models for predictive modeling of Bitcoin price. As suspected, LSTM performed well on time sentisive dataset. LSTM model was trained to use previous 8 days worth of data to predict next day's Bitcoin price. Features used for the model is described in "Feature Engineering" section. LDA model's topic features were not used as they did not any impact on the model. Careful train/validation/test set split was carried out so that the model doesn't look into the future (important especially since moving averages were used). Here is LSTM model's performance on price prediction.  
+![LSTM Prediction](img/lstm_prediction.PNG)
 
 
 ## Result 
-Below is confusion matrix generated from LightGBM model. It performed very well on the test dataset as already shown in the various scores from the Model section. Although very surprising, I contribute this too-good-to-be true results to my dataset. First of all, all audio files in the dataset were recorded with minimal noises. Secondly, very similar sentences repeated in the dataset, which was not optimal.  
-![Confusion Matrix](img/confusion_matrix.PNG)
+Even though LSTM model's prediction looks pretty good on the surface, it actually is not. Simply put, it probably has learned to predict a value close to the previous days' price. At current state, it is only predicting the next day's price. However, if similar result as image above was achieved with predicting not just one day but several days ahead of the time, I could then claim my victory. 
 
 ## Conclusion
-Overall, I was very happy that I was able to build a classifier that would classify different emotions using raw audio files (.wav) without using neural network as base. I pitched my model(LightGBM) as lighter and quicker, but true comparison has to be made in terms of time and performance since quicker execution time might not be able to justify significant performance boost you could potentially get with NN-based architecture. However, with the current model, I'm pretty confident in its ability to generalize due to the pre-processing and feature engineering performed. Furthermore, with more robust and diverse data, LightGBM model will be able to generalize even better.
-
-Again, here is a demo of a working flask app : [Demo Link - YouTube](https://youtu.be/6blqy-s0VpM)
+This was a very meaningful and successful project for me. I was able to build an entire pipeline that utilizes the power of NLP and include features generated from NLP (topic vectors and sentiment features) into predictive modeling. Also, this pipeline can apply to **ANY** traded commodities/stocks/cryptocurrencies. Also, this project will be used as a backbone for my follow-up project that will focus more on actual trading of Bitcoin. In this follow-up project, I will interact with paper trading API to back test different strategies/models and potentially implement it in real trading. 
