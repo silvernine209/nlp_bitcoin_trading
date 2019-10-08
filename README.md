@@ -67,4 +67,4 @@ Even though LSTM model's prediction looks pretty good on the surface, it actuall
 ## Conclusion
 This was a very meaningful and successful project for me. I was able to build an entire pipeline that utilizes the power of NLP and include features generated from NLP (topic vectors and sentiment features) into predictive modeling. Also, this pipeline can apply to **ANY** traded commodities/stocks/cryptocurrencies. Also, this project will be used as a backbone for my follow-up project that will focus more on actual trading of Bitcoin. In this follow-up project, I will interact with paper trading API to back test different strategies/models and potentially implement it in real trading. 
 
-[Link to Blog](https://silvernine209.github.io/matthewlee.github.io/)
+## [Link to Blog](https://silvernine209.github.io/matthewlee.github.io/)
